@@ -20,7 +20,7 @@ def bfs(graph: Matrix, source: int) -> List[int]:
     Returns
     -------
     result: List[int]
-        list where i-th value is dist_from_source of the shortest path from source to vertex i,
+        list where i-th value is distance of the shortest path from source to vertex i,
         if there is no path value is -1
     """
     n = graph.ncols
