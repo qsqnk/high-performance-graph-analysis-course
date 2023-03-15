@@ -5,6 +5,8 @@ __all__ = [
     "bfs",
 ]
 
+from pygraphblas.descriptor import RC
+
 
 def bfs(graph: Matrix, source: int) -> List[int]:
     """
@@ -29,19 +31,13 @@ def bfs(graph: Matrix, source: int) -> List[int]:
     assert source in range(n)
 
     level = Vector.sparse(BOOL, n)
-    used = Vector.sparse(BOOL, n)
-    ans = Vector.dense(INT64, n, fill=-1)
-
     level[source] = True
-    dist_from_source = 0
-    prev_used = None
+    ans = Vector.sparse(INT64, n)
 
-    while prev_used != used.nvals:
-        prev_used = used.nvals
-        ans.assign_scalar(dist_from_source, mask=level)
-        used |= level
-        level @= graph
-        level.assign_scalar(False, mask=used)
-        dist_from_source += 1
+    dist = 0
+    while level:
+        ans.assign_scalar(dist, mask=level)
+        level.vxm(graph, out=level, mask=ans.pattern(), desc=RC)
+        dist += 1
 
     return list(ans.vals)
