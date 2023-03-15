@@ -1,11 +1,10 @@
 from typing import List
 from pygraphblas import Matrix, BOOL, Vector, INT64
+from pygraphblas.descriptor import RC
 
 __all__ = [
     "bfs",
 ]
-
-from pygraphblas.descriptor import RC
 
 
 def bfs(graph: Matrix, source: int) -> List[int]:
