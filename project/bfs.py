@@ -70,15 +70,10 @@ def ms_bfs(graph: Matrix, source: List[int]) -> List[Tuple[int, List[int]]]:
         parents[i, v] = -1
         front[i, v] = v
 
-    idx_v = Vector.from_list(range(n))
-    idx = Matrix.sparse(INT64, nrows=m, ncols=n)
-    for i in range(m):
-        idx.assign_row(i, idx_v)
-
     while front:
         front.mxm(graph, INT64.MIN_FIRST, out=front, mask=parents.pattern(), desc=RC)
         parents.assign(front, mask=front.pattern())
-        front.assign(idx, mask=front.pattern())
+        front.apply(INT64.POSITIONJ, out=front, mask=front.pattern())
 
     return [
         (v, [parents.get(i, j, default=-2) for j in range(n)])
