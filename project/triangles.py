@@ -46,7 +46,7 @@ def cohen_triangles(graph: Matrix) -> int:
     """
     _assert_is_adjacency_matrix_of_undirected_graph(graph)
     l, u = graph.tril(), graph.triu()
-    return sum(l.mxm(u, cast=INT64, mask=graph).nvals) // 2
+    return sum(l.mxm(u, cast=INT64, mask=graph).vals) // 2
 
 
 def sandia_triangles(graph: Matrix) -> int:
@@ -64,7 +64,7 @@ def sandia_triangles(graph: Matrix) -> int:
         number of triangles
     """
     u = graph.triu()
-    return sum(u.mxm(u, cast=INT64, mask=u).nvals)
+    return sum(u.mxm(u, cast=INT64, mask=u).vals)
 
 
 def _assert_is_adjacency_matrix_of_undirected_graph(m: Matrix):
