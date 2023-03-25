@@ -27,7 +27,7 @@ def vertex_to_triangle_count(graph: Matrix) -> List[int]:
     _assert_is_adjacency_matrix_of_undirected_graph(graph)
     ans_v = graph.mxm(graph, cast=INT64, mask=graph).reduce_vector(desc=T0)
     ans_v = ans_v.dense(INT64, size=ans_v.size, fill=ans_v if ans_v.nvals else 0)
-    return [count // 2 for count in ans_v.vals]
+    return list((ans_v / 2).vals)
 
 
 def cohen_triangles(graph: Matrix) -> int:
