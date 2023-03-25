@@ -63,6 +63,7 @@ def sandia_triangles(graph: Matrix) -> int:
     result: int
         number of triangles
     """
+    _assert_is_adjacency_matrix_of_undirected_graph(graph)
     u = graph.triu()
     return sum(u.mxm(u, cast=INT64, mask=u).vals)
 
